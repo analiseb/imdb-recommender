@@ -1,0 +1,6 @@
+appName: ADS-1
+logLevel: WARN
+
+MongoDB:
+  mongo_uri: "mongodb+srv://test:1234@cluster0.rvcwr.mongodb.net/imdbADS?retryWrites=true&w=majority"  # Connect to MongoDB
+

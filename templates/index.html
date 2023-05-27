@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+      <div id="cover-caption">
+        <div id="container" class="container">
+          <div class="row">
+            <div class="col-sm-10 offset-sm-1 text-center custom-form-container">
+              <div class="info-form">
+                <form class="form-inline justify-content-center" action="/" method="post">
+                  {% csrf_token %}
+                  <img class="logo" src="{% static 'img/logo.svg' %}" height="45px" alt="logo"/>
+                  <div class="form-group">
+                    <label class="sr-only">Movie title</label>
+                    {{ form }}
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-ok">Search</button>
+                </form>
+              </div>
+              {{ movie_input_found | safe }}
+              <ul class="list-group">
+                <!-- <li class="list-group-item">{{ movie_input_found }}</li> -->
+                <!-- <li class="list-group-item">{{ similar_movies |safe }}</li> -->
+                {% for movie in values_similar_movies %}
+                  <li class="list-group-item">
+                    {% if not movie.url_image == None %}
+                      <img style="float: left;" src="{{movie.url_image}}" >
+                    {% else %}
+                      <img style="float: left;" src=" {% static '/img/no_image.svg' %}" width="154" height="222">
+                      <!-- <p>Title: {{ movie.title }}</p> -->
+                    {% endif %}
+                    <p>Title: {{ movie.title }}</p>
+                    <p>Popularity: {{ movie.popularity }}</p>
+                    <p>Average of votes: {{ movie.vote_average }}</p>
+                    {% if request.user.is_authenticated %}
+                      {% if movie.previously_saved %}
+                      <form class="form-inline justify-content-center" action="/" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-ok" value="accept" name="save_movie">Save to My Movies</button>
+                        <input type="hidden" name="title" value="{{ movie.title }}">
+                        <input type="hidden" name="popularity" value="{{ movie.popularity }}">
+                        <input type="hidden" name="vote_average" value="{{ movie.vote_average }}">
+                        <input type="hidden" name="url_image" value="{{ movie.url_image }}">
+                      </form>
+                      {% else %}
+                      <p>Saved to My Movies</p>
+                      {% endif %}
+                    {% endif %}
+                  </li>
+                {% endfor %}
+                <!-- {% for m in similar_movies %}
+                <li class="list-group-item">{{ m | safe}}</li>
+                {% endfor %} -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

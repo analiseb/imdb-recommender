@@ -1,0 +1,13 @@
+Django==3.1.1
+gunicorn
+python-dotenv
+dj-database-url
+psycopg2
+whitenoise
+pyyaml
+scikit-learn
+numpy
+pandas
+pymongo
+rapidfuzz
+dnspython

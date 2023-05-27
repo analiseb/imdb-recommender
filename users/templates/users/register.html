@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<div id="cover-caption">
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-sm-10 offset-sm-1 text-center custom-form-container">
+        <h2>Sign up</h2>
+        <form method="POST">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button type="submit">Create Account</button>
+        </form>
+        <hr />
+        Already have an account? | 
+        <a href="/login">Log In</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

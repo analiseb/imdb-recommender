@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<div id="cover-caption">
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-sm-10 offset-sm-1 text-center custom-form-container">
+        <img class="logo" src="{% static 'img/logo.svg' %}" height="45px" alt="logo"/>
+        <ul class="list-group">
+          {% for movie in my_movies %}
+            <li class="list-group-item">
+              {% if not movie.url_image == "None" %}
+                <img style="float: left;" src="{{movie.url_image}}" >
+              {% else %}
+                <img style="float: left;" src=" {% static '/img/no_image.svg' %}" width="154" height="222">
+              {% endif %}
+              <p>Title: {{ movie.title }}</p>
+              <p>Popularity: {{ movie.popularity }}</p>
+              <p>Average of votes: {{ movie.vote_average }}</p>
+              <form class="form-inline justify-content-center" action="/mymovies" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-ok" value="accept" name="status">Delete</button>
+                <input type="hidden" name="title" value="{{ movie.title }}">
+                <input type="hidden" name="popularity" value="{{ movie.popularity }}">
+                <input type="hidden" name="vote_average" value="{{ movie.vote_average }}">
+                <input type="hidden" name="url_image" value="{{ movie.url_image }}">
+              </form>
+              </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
